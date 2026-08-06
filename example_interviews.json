@@ -1,0 +1,202 @@
+{
+  "sde_strong_candidate": {
+    "role": "SDE",
+    "candidate_profile": "5 years backend experience at Google, strong DSA skills",
+    "rounds": [
+      {
+        "round_name": "Technical",
+        "questions_asked": 6,
+        "conversation": [
+          {
+            "question": "Design a LRU Cache. What's your approach?",
+            "answer": "I'd use a HashMap for O(1) lookups combined with a doubly-linked list to maintain insertion order. Most recently used items move to the front. When capacity is exceeded, I evict the least recently used item from the back. Time complexity: O(1) for get/put operations."
+          },
+          {
+            "question": "Good approach. How would you handle concurrency in your LRU Cache?",
+            "answer": "I'd use ReentrantReadWriteLock for thread safety. Read operations can be concurrent, but write operations need exclusive access. Alternatively, I could use ConcurrentHashMap with atomic operations for better performance, though that's more complex."
+          },
+          {
+            "question": "Tell me about a system design problem you've solved",
+            "answer": "I designed a distributed caching layer for our recommendation service. We had cache misses causing database overload. Solution: multi-level caching with local L1 cache and distributed Redis L2 cache, plus a cache warming strategy. This reduced database load by 70% and improved latency from 200ms to 50ms."
+          },
+          {
+            "question": "What trade-offs did you make in this design?",
+            "answer": "Main trade-off was cache consistency vs. availability. We chose eventual consistency with TTL to handle write conflicts. Also traded off memory usage (more cache) for query latency. This was acceptable for our use case since recommendation data doesn't need to be real-time consistent."
+          },
+          {
+            "question": "How would you monitor and debug performance issues in production?",
+            "answer": "I'd use distributed tracing with Jaeger to identify bottlenecks across services. Set up metrics for cache hit rate, latency percentiles, and database load. Use structured logging for detailed debugging. Also implement alerting for anomalies like sudden latency spikes or cache misses increase."
+          },
+          {
+            "question": "Excellent. Last question: How do you stay updated with new technologies?",
+            "answer": "I contribute to open-source projects, read technical blogs and papers regularly, and experiment with new tools in personal projects. I also lead tech discussions in our team about adopting new technologies. Recently explored Rust for performance-critical components."
+          }
+        ]
+      },
+      {
+        "round_name": "HR",
+        "questions_asked": 5,
+        "conversation": [
+          {
+            "question": "Tell me about a time you had to work with a difficult team member",
+            "answer": "Early in my career at Google, I had a colleague who was very critical of my code. Instead of getting defensive, I asked them to mentor me on best practices. This turned into a great mentorship, and they became one of my closest collaborators. Taught me the value of feedback."
+          },
+          {
+            "question": "Tell me about your biggest failure and what you learned",
+            "answer": "I once pushed code to production without proper testing that caused a 2-hour outage. It was humbling. I learned the importance of thorough testing, code review discipline, and proper rollback procedures. Now I always follow a staged rollout approach."
+          },
+          {
+            "question": "How do you handle tight deadlines?",
+            "answer": "I prioritize ruthlessly - focus on MVP first, then iterate. I communicate proactively about trade-offs with stakeholders. I also ensure the team takes breaks to avoid burnout. One time we had a critical feature due in 2 weeks - I broke it into milestones, distributed work based on strengths, and we shipped on time."
+          },
+          {
+            "question": "Why are you interested in this role?",
+            "answer": "I'm excited about the scale of problems you're solving here and the technical challenges in your infrastructure. I also love that your culture emphasizes continuous learning and mentorship - I want to grow into a senior/staff engineer role while helping junior engineers."
+          },
+          {
+            "question": "How do you see yourself growing in the next 3-5 years?",
+            "answer": "I want to deepen my expertise in distributed systems and move into a senior/tech-lead role. I'd love to lead architectural decisions and mentor a team. I'm also interested in understanding the business side better - how engineering decisions affect product and users."
+          }
+        ]
+      },
+      {
+        "round_name": "Problem-Solving",
+        "questions_asked": 5,
+        "conversation": [
+          {
+            "question": "Our API response time increased from 50ms to 200ms overnight. Walk me through debugging this",
+            "answer": "First, I'd check if it's a gradual degradation or sudden spike - that tells us if it's a new deployment or resource issue. Then I'd check: 1) Database query performance (slow queries), 2) Network latency (GC pauses), 3) Infrastructure metrics (CPU/memory), 4) Recent deployments/config changes. I'd use APM tools to trace where time is spent."
+          },
+          {
+            "question": "Good approach. What if it's the database?",
+            "answer": "I'd check query performance using slow query logs. Run EXPLAIN PLAN on recent queries. Check if indices are being used. Look for missing indices, table locks, or connection pool exhaustion. I'd also check if data volume increased. If a query suddenly became slow, it might need re-optimization or a schema change."
+          },
+          {
+            "question": "Design a message queue system. What are the trade-offs?",
+            "answer": "Key decisions: 1) Throughput vs. latency - in-memory vs. disk-backed, 2) Durability - replication factor and ack strategies, 3) Ordering - per-partition or global, 4) Scalability - horizontal partitioning. For most use cases, Kafka-like architecture with partitions works well. Trade-off: Kafka has replication overhead but guarantees durability."
+          },
+          {
+            "question": "How would you handle a scenario where messages are being processed out of order?",
+            "answer": "Out-of-order delivery is actually expected in distributed systems. Solutions depend on requirements: 1) Idempotent processing, 2) Transaction logs with timestamps, 3) If order matters, use single partition per logical entity (e.g., per user), 4) Handle duplicates gracefully. Most services use timestamps and idempotency keys."
+          },
+          {
+            "question": "Final question: How do you approach learning new technologies?",
+            "answer": "I start with the problem it solves and trade-offs vs. existing solutions. Read documentation and papers. Build a small prototype. Then real-world usage. I also learn from others' experiences - read case studies from companies using the tech. This approach helps me make informed decisions."
+          }
+        ]
+      }
+    ],
+    "overall_feedback": {
+      "assessment": "Excellent SDE candidate with strong technical fundamentals, real-world experience, and great communication skills.",
+      "strengths": [
+        "Deep understanding of distributed systems and scalability",
+        "Excellent communication and ability to explain complex concepts",
+        "Growth mindset and continuous learning orientation",
+        "Strong leadership potential"
+      ],
+      "areas_to_improve": [
+        "Could have gone deeper into trade-offs for some design problems",
+        "Might benefit from more cross-functional experience (product, design)"
+      ],
+      "confidence": "9/10 - Highly likely to succeed in this role and grow into senior positions"
+    }
+  },
+  "data_scientist_average_candidate": {
+    "role": "Data Scientist",
+    "candidate_profile": "3 years in analytics, transitioning to ML",
+    "rounds": [
+      {
+        "round_name": "Technical",
+        "questions_asked": 6,
+        "conversation": [
+          {
+            "question": "What's the difference between precision and recall? When would you optimize for each?",
+            "answer": "Precision is true positives divided by all predicted positives - it's about false positives. Recall is true positives divided by all actual positives - it's about false negatives. You'd optimize for precision when false positives are costly (spam detection, medical diagnosis) and recall when false negatives are costly (fraud detection)."
+          },
+          {
+            "question": "Tell me about regularization techniques and why they're important",
+            "answer": "L1 and L2 regularization add penalties to model complexity to prevent overfitting. L1 encourages sparsity, L2 encourages smaller weights overall. They're important because they generalize models better on unseen data. Dropout is another technique for neural networks."
+          },
+          {
+            "question": "Can you explain A/B testing? How would you determine if a result is statistically significant?",
+            "answer": "A/B testing compares two versions to see which performs better. You'd use hypothesis testing with a significance level (usually 0.05). Calculate the p-value - if less than 0.05, you reject the null hypothesis. Sample size matters too - need enough samples for statistical power."
+          },
+          {
+            "question": "How do you handle missing data in your datasets?",
+            "answer": "It depends on the amount and type of missing data. For small amounts, I'd use mean/median imputation or forward-fill for time series. For more complex cases, I might use regression imputation or build a model to predict missing values. Sometimes I'd just drop rows/columns with too many missing values."
+          },
+          {
+            "question": "What's your experience with SQL?",
+            "answer": "I know basic SQL - SELECT, JOINs, WHERE clauses, GROUP BY, ORDER BY. I can write queries to explore data, but I'm not as comfortable with complex window functions or optimization. That's an area I want to improve."
+          },
+          {
+            "question": "That's fine, most analytics backgrounds start there. Tell me about a real project where you built a model",
+            "answer": "I built a customer churn prediction model. Used historical customer data, built a logistic regression and random forest model. Random forest performed better with 85% accuracy. The tricky part was handling class imbalance - churn was only 15% of data. Used SMOTE to oversample minority class."
+          }
+        ]
+      },
+      {
+        "round_name": "HR",
+        "questions_asked": 5,
+        "conversation": [
+          {
+            "question": "Why did you transition from analytics to ML?",
+            "answer": "I realized I enjoyed building models and solving harder technical problems. Spent time learning Python and ML libraries outside work. Took Andrew Ng's ML course. Started small projects and built confidence. I wanted more technical depth and the ability to build end-to-end solutions."
+          },
+          {
+            "question": "Tell me about a time you had to communicate complex analysis to non-technical stakeholders",
+            "answer": "I presented churn predictions to the business team. They were confused by model metrics initially. I created visualizations showing predicted churn rates by segment and recommended actions. After that, they understood the business impact and we deployed the model."
+          },
+          {
+            "question": "How do you handle feedback or criticism of your work?",
+            "answer": "I appreciate constructive feedback - it helps me improve. Had a senior data scientist review my model once, point out I wasn't considering data leakage. That was eye-opening. I learned to be more careful about feature engineering and to ask for reviews early."
+          },
+          {
+            "question": "Where do you see yourself in 5 years?",
+            "answer": "I want to become a strong ML engineer - comfortable with deep learning and production systems. Maybe lead a small team eventually. I also want to understand the business better so I can propose ML solutions proactively, not just react to requests."
+          },
+          {
+            "question": "What is one area you feel you need to develop?",
+            "answer": "Definitely need stronger software engineering skills - code organization, testing, deployment. My analytics background meant I wrote more exploratory code. I'm working on writing production-quality code and understanding MLOps and model deployment."
+          }
+        ]
+      }
+    ]
+  },
+  "pm_challenging_candidate": {
+    "role": "PM",
+    "candidate_profile": "Product manager from startup, first time interviewing at big tech",
+    "rounds": [
+      {
+        "round_name": "Product Sense",
+        "questions_asked": 6,
+        "conversation": [
+          {
+            "question": "How would you improve YouTube's recommendation algorithm?",
+            "answer": "I'd look at watch time data and engagement. Currently it seems to optimize for watch time but maybe too much of the same content. I'd suggest more diverse recommendations and maybe a serendipity factor to discover new channels. Also, better controls for users to tune their recommendations."
+          },
+          {
+            "question": "Interesting. But you didn't talk about data or metrics. What metrics would you track?",
+            "answer": "Right. So... watch time, video views, click-through rate on recommendations. Maybe also user satisfaction scores. Um, I'm not sure what else."
+          },
+          {
+            "question": "OK. Let me ask differently. You're launching a new social feature. Walk me through your approach.",
+            "answer": "I'd start by talking to users to understand what they want. Then I'd sketch out a design. We'd build it and ship to all users. If metrics are good, we keep it. If not, we remove it."
+          },
+          {
+            "question": "Can you be more specific about metrics and rollout?",
+            "answer": "I mean... I'd look at engagement metrics like daily active users, feature adoption rate. Maybe A/B test it? I haven't done a lot of experimentation in my startup environment - we mostly shipped things and iterated based on feedback."
+          },
+          {
+            "question": "Understandable. How would you prioritize features when you have many requests?",
+            "answer": "I'd talk to customers and see what's most important to them. We definitely do user research at my current company. I'd also think about business impact and how much effort it takes to build."
+          },
+          {
+            "question": "Can you quantify these dimensions? How do you balance them objectively?",
+            "answer": "Hmm, that's a good question. I guess I'd create a scoring system? Like business impact out of 10, effort out of 10, user requests count... but I haven't done that formally."
+          }
+        ]
+      }
+    ]
+  }
+}
