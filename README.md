@@ -1,95 +1,20 @@
-# 🎤 MockMate
+# 🎤 MockMate - AI Interview Coach
 
 A sophisticated multi-agent AI system that conducts realistic mock interviews across 3 target roles with 3 distinct rounds each. Powered by **Groq API** (`llama-3.1-8b-instant` & `whisper-large-v3-turbo`), featuring personalized background-aware difficulty, voice interaction, single-question card UI, and downloadable PDF transcripts.
 
----
-
-## 🌟 Key Features
-
-✅ **3 Target Roles**
-- **Software Development Engineer (SDE)**
-- **Data Scientist**
-- **Product Manager (PM)**
-
-✅ **3 Rounds per Role with Distinct Agents**
-- **SDE:** Technical (`🤖 Agent 1`) → HR/Behavioral (`🤝 Agent 2`) → Problem-Solving (`🧠 Agent 3`)
-- **Data Scientist:** Technical (`🤖 Agent 1`) → HR/Behavioral (`🤝 Agent 2`) → Case Study (`🧠 Agent 3`)
-- **PM:** Product Sense (`🤖 Agent 1`) → HR/Behavioral (`🤝 Agent 2`) → Analytics & Strategy (`🧠 Agent 3`)
-
-✅ **Background-Aware Adaptive Difficulty**
-- **Automatic Experience Detection:** Parses candidate background (e.g. "fresher / student" vs "5 years backend engineer at Google").
-- **Beginner Mode:** Easy to moderate questions for freshers/students with guidance and basic fundamentals.
-- **Intermediate & Advanced Modes:** Deep technical probes, system design trade-offs, and practical scale questions for experienced candidates.
-
-✅ **Clean Single-Question Card UI**
-- Non-scrolling interface displaying **only the active question** in a glassmorphic card.
-- Live Agent badges and Question Counters (`Question X of 6`).
-- Previous Q&A stored in state/memory and reviewed upon completion.
-
-✅ **Multi-Modal Interface (Voice & Text)**
-- 🗣️ **Voice Output:** Clear MP3 audio generation using `gTTS` with client-side audio playback & caching.
-- 🎤 **Voice Input:** Native browser recording using Streamlit `st.audio_input` transcribed in real-time by Groq **Whisper** (`whisper-large-v3-turbo`).
-- ✍️ **Text Mode:** Standard text reading and typing support.
-
-✅ **Comprehensive Feedback & PDF Transcripts**
-- Detailed round-by-round evaluation and overall performance summary.
-- Top 3 Strengths, Areas for Improvement, and Learning Plan.
-- 📥 **Downloadable PDF Transcript:** Export a formatted PDF report via `fpdf2` containing complete interview history and feedback.
-
----
-
-## 🏗️ Architecture
-
-```
-┌──────────────────────────────────────────────────────────┐
-│              Streamlit Interface (UI)                    │
-│   - Single-Question Card View & Agent Badges             │
-│   - Browser Audio Recorder (st.audio_input) & Player     │
-│   - Resume & Background Parser                           │
-│   - PDF Transcript Generator (fpdf2)                     │
-└────────────────────────────┬─────────────────────────────┘
-                             │
-┌────────────────────────────▼─────────────────────────────┐
-│               Interview Orchestrator                      │
-│   - Manages 3 rounds & turn-based question flow           │
-│   - Tracks state & background difficulty context          │
-│   - Calls Evaluator & Coach Agents                        │
-└────────────────────────────┬─────────────────────────────┘
-                             │
-     ┌───────────────────────┼───────────────────────┐
-     ▼                       ▼                       ▼
-┌──────────────┐      ┌──────────────┐      ┌──────────────┐
-│ Agent 1      │      │ Agent 2      │      │ Agent 3      │
-│ Technical /  │      │ HR &         │      │ Problem-     │
-│ Product Sense│      │ Behavioral   │      │ Solving / Case│
-└──────┬───────┘      └──────┬───────┘      └──────┬───────┘
-       │                     │                     │
-       └─────────────────────┼─────────────────────┘
-                             ▼
-              ┌─────────────────────────────┐
-              │          Groq API           │
-              │ - llama-3.1-8b-instant      │
-              │ - whisper-large-v3-turbo    │
-              └─────────────────────────────┘
-```
-
----
-
-## 🚀 Quick Start
+## 🚀 Setup and Run Instructions
 
 ### Prerequisites
 - Python 3.8+
 - Groq API Key ([Get a free key from console.groq.com](https://console.groq.com))
 
 ### Installation
-
-1. **Clone / Navigate to the repository:**
-```bash
-git clone https://github.com/girish-indurkar/MockMate-Multi-agentAi-Mock-Interview-Platform.git
-cd MockMate-Multi-agentAi-Mock-Interview-Platform
-```
-
-2. **Set up Virtual Environment (Optional but recommended):**
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/girish-indurkar/MockMate-Multi-agentAi-Mock-Interview-Platform.git
+   cd MockMate-Multi-agentAi-Mock-Interview-Platform
+   ```
+2. **Set up Virtual Environment:**
    ```bash
    python -m venv venv
    # On Windows:
@@ -97,78 +22,78 @@ cd MockMate-Multi-agentAi-Mock-Interview-Platform
    # On Mac/Linux:
    source venv/bin/activate
    ```
-
 3. **Install Dependencies:**
    ```bash
    pip install -r requirements.txt
    ```
-
 4. **Configure Environment:**
    Create a `.env` file in the root directory:
    ```env
    GROQ_API_KEY=gsk_your_groq_api_key_here
    ```
-
 5. **Launch the Application:**
    ```bash
    streamlit run app.py
    ```
    Open your browser at `http://localhost:8501`.
 
----
+## 🏗️ Architecture Overview
 
-## 📖 Usage Guide
+The system is built on a multi-agent orchestration architecture where different AI personas take turns interviewing the candidate. 
 
-### Step 1: Setup Interview
-1. Select your target role (**SDE**, **Data Scientist**, or **PM**).
-2. Specify your **Background** (e.g., `"Fresher / Computer Science Student"` or `"5 years Backend Engineer"`).
-3. (Optional) Upload your resume (**PDF** or **DOCX**).
-4. Choose **Voice Mode** or **Text Mode**.
-5. Click **🚀 Start Interview**.
+### What Each Agent Does
+1. **Agent 1 (Technical / Product Sense Interviewer)**: Focuses on core competencies. For an SDE, this means coding, system design, and algorithms. For a PM, it means product sense and metrics.
+2. **Agent 2 (HR & Behavioral Interviewer)**: Evaluates cultural fit, leadership principles, conflict resolution, and soft skills.
+3. **Agent 3 (Problem-Solving / Case Study / Analytics Interviewer)**: Tests analytical thinking, unstructured problem solving, and ability to handle ambiguous edge cases.
+4. **Coach Agent (Evaluator)**: Operates behind the scenes after the interview concludes. It analyzes the entire transcript to generate comprehensive, actionable feedback, highlighting strengths, areas of improvement, and a learning plan.
 
-### Step 2: Conduct Interview
-- Each role consists of 3 distinct rounds (6 questions per round).
-- Read/listen to the current question card with the active Agent badge.
-- Submit your answer via voice recording or text.
-- The system automatically progresses to the next question.
+### Orchestration
+- **`InterviewOrchestrator`**: The central state machine defined in `interview_agent.py`. It manages the flow of the interview, determining when a round ends and the next begins. It passes the conversation context from round to round so agents have memory of past answers.
+- **Background-Aware Difficulty**: The orchestrator parses the candidate's background (via resume or text input) and injects this context into the agents' system prompts, ensuring they adjust their expectations (e.g., easier foundational questions for freshers, deep architecture trade-offs for seniors).
+- **Streamlit Session State**: Acts as the short-term memory during the active session, tracking current round, question count, UI state, and audio cache.
 
-### Step 3: Feedback & Export
-- Receive structured coaching report at the end of the interview.
-- Download the complete interview report as a **PDF document** or JSON file.
+## ⚖️ Key Design Decisions & Tradeoffs
 
----
+1. **Groq API for LLM & Whisper**: 
+   - *Decision*: Use Groq's fast inference for real-time voice and text interaction.
+   - *Tradeoff*: High speed is prioritized over using a massive model with higher latency. `llama-3.1-8b-instant` provides a great balance of conversational reasoning and near-zero latency, crucial for voice interviews.
+2. **Single-Question Card UI**:
+   - *Decision*: Hide chat history and only display the active question to prevent UI scrolling and keep a clean interface.
+   - *Tradeoff*: Reduces cognitive load and simulates a real interview environment where you focus on the current question, but prevents the candidate from re-reading past answers mid-round.
+3. **Client-Side TTS & Whisper ASR**:
+   - *Decision*: `gTTS` is used for text-to-speech, and Streamlit's native `audio_input` captures voice to be transcribed by Whisper.
+   - *Tradeoff*: `gTTS` is simple and free, though less emotionally expressive than premium TTS services. Transcriptions are handled server-side (via API) rather than browser-side to ensure high accuracy and low overhead on the user's machine.
+4. **Stateless Agents with Context Injection**:
+   - *Decision*: Agents don't maintain their own persistent memory; instead, the Orchestrator injects the necessary conversation history into their prompts.
+   - *Tradeoff*: Makes the system highly scalable and stateless, though it consumes more tokens per API call as the conversation grows.
 
-## 📝 File Structure
+## 📄 Example Interview Transcripts
 
-```
-ai-mock-interview-coach/
-├── app.py                      # Streamlit UI & single-question orchestrator interface
-├── interview_agent.py          # Multi-agent orchestrator & background difficulty logic
-├── prompts.py                  # Role-specific & round-specific system prompts
-├── resume_parser.py            # PDF / DOCX resume parsing utility
-├── requirements.txt            # Python dependencies (Streamlit, Groq, gTTS, fpdf2, etc.)
-├── .env                        # Environment variables (GROQ_API_KEY)
-├── example_interviews.json    # Sample transcript datasets
-└── README.md                  # Project documentation
-```
+Here are some abbreviated examples of how the AI adapts to different candidate profiles based on our test data.
 
----
+### 1. Strong Candidate (SDE, 5 YOE)
+**Profile:** 5 years backend experience at Google, strong DSA skills.
+**Round:** Technical
+- **Agent:** Design a LRU Cache. What's your approach?
+- **Candidate:** I'd use a HashMap for O(1) lookups combined with a doubly-linked list to maintain insertion order...
+- **Agent:** Good approach. How would you handle concurrency in your LRU Cache?
+- **Candidate:** I'd use ReentrantReadWriteLock for thread safety. Read operations can be concurrent, but write operations need exclusive access...
+- **Coach Feedback:** Excellent technical fundamentals. Deep understanding of distributed systems and scalability. Could have gone deeper into trade-offs for some design problems.
 
-## 🔧 Dependencies
+### 2. Weak Candidate (Data Scientist, Fresher)
+**Profile:** Fresher, bootcamp graduate.
+**Round:** Technical
+- **Agent:** Can you explain the difference between supervised and unsupervised learning?
+- **Candidate:** Supervised learning is when you have labels. Unsupervised is when you don't.
+- **Agent:** That's correct, but quite brief. Can you give an example of an algorithm for each?
+- **Candidate:** Linear regression for supervised. I don't remember any for unsupervised.
+- **Coach Feedback:** Needs stronger grasp of fundamental machine learning concepts. Suggest reviewing common algorithms (K-Means, PCA) and practicing articulating technical explanations more thoroughly.
 
-- `streamlit>=1.45` — Web app framework
-- `groq>=0.20` — Fast LLM & Whisper API client
-- `python-dotenv>=1.1` — Environment variable loader
-- `PyPDF2>=3.0.1` — PDF parser
-- `python-docx>=1.1.0` — Word document parser
-- `requests>=2.32` — HTTP client
-- `gTTS>=2.5.0` — Google Text-to-Speech audio synthesis
-- `fpdf2>=2.8.0` — PDF report generator
-
----
-
-## 📜 License
-
-This project is open-source and available for educational and practice purposes.
-
-*MockMate Platform | © 2026 All rights reserved*
+### 3. Tricky/Edge Case Candidate (PM)
+**Profile:** Experienced PM transitioning from Marketing, tends to deflect technical questions.
+**Round:** Product Sense
+- **Agent:** How would you design a new metric to track user engagement for a newly launched feature?
+- **Candidate:** I'd look at how many people tweeted about it and the general sentiment of our marketing campaigns.
+- **Agent:** While marketing sentiment is useful, how would you measure in-app product engagement using our internal telemetry?
+- **Candidate:** I usually leave the data logging to the engineering team. As long as users are happy, that's what matters.
+- **Coach Feedback:** Candidate deflects analytical questions. Needs to demonstrate product-specific data competency rather than relying solely on marketing metrics. Must show willingness to define concrete product telemetry.
