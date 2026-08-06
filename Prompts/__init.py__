@@ -1,0 +1,13 @@
+ """
+Mock Interview Prompts Package
+"""
+
+from .sde import SDE_PROMPTS
+from .data_scientist import DATA_SCIENTIST_PROMPTS
+from .product_manager import PRODUCT_MANAGER_PROMPTS
+
+PROMPTS = {
+    "SDE": SDE_PROMPTS,
+    "Data Scientist": DATA_SCIENTIST_PROMPTS,
+    "Product Manager": PRODUCT_MANAGER_PROMPTS
+}
